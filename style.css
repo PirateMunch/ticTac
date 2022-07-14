@@ -1,0 +1,49 @@
+
+body {
+background: linear-gradient(90deg, rgba(158, 189, 117, 0), rgba(222, 255, 199, 0.6));
+}
+
+header {
+    text-align: center;
+    font-size: 2rem;
+}
+
+
+#gameBoard {
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(3, 5rem);
+    grid-template-rows: repeat(3, 5rem);
+    justify-content: center;
+    margin: 3rem 0;
+}
+
+.gameBox {
+    display: flex;
+    color: rgb(230, 93, 93);
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+div>div {
+    padding: 10px;
+    background-color: aquamarine;
+}
+
+/* footer style */
+footer {
+    display: flex;
+    font-family: var(--font-robo);
+    min-height: 3rem;
+    color: var(--clr-purple);
+    justify-content: space-evenly;
+    border-top-right-radius: 20rem;
+    margin-top: 1rem;
+}
+
+span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
