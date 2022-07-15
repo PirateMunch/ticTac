@@ -8,45 +8,30 @@
 // in the game, player or gameboard objects.
 
 
-// eventlistener function IFFY?   ----start
-const game = (() => {
-    let result;
-    //EventListener for game boxes.
-    document.querySelectorAll('.gameBox').forEach(item => {
-        item.addEventListener('click', event =>{
-        console.log(item.innerHTML)
-        result = item.innerHTML;
-        console.log(result)
-        console.log(jim.piece) //good scope here!
-        })
-    });
 
-     return{result}
-  
+// eventlistener function IFFY?   ----start
+const game = (() => {     // --game-- object to control game flow. 
+    //EventListener for game boxes.
+    const startGame = startFunction();
+    function startFunction() {
+        return(() => {
+            document.querySelector('#startBtn').addEventListener('click', () => {
+                console.log("works")
+
+            });
+        })();
+    }
+
+    document.querySelectorAll('.gameBox').forEach(item => {
+        item.addEventListener('click', () =>{
+            //item = gamebox.
+        console.log(item)
+        item.innerHTML = jim.piece ;
+        
+        })
+    }); 
 })();      //-----event end
 
-//---- factory wont invoke eventlistener? strange
-// // eventlistener function Factory   ----start
-// function game () {
-   
-//     //EventListener for game boxes.
-//   const result =  document.querySelectorAll('.gameBox').forEach(item => {
-//         item.addEventListener('click', event =>{
-//         console.log(item.innerHTML)
-//         boxshit = item.innerHTML;
-//         console.log(result)
-//         console.log(jim.piece) //good scope here!
-//         })
-//     });
-
-//      return{result, boxshit}
-  
-// };    //-----event end Factory end
-
-
-console.log (game.result)
-console.log(game.boxshit)
-// console.log(result)
 
 // --gameBoard-- IIFE module. --------------!!
 const gameboard = (() => {
@@ -58,10 +43,29 @@ const gameboard = (() => {
     const box6 = document.getElementById('box6');
     const box7 = document.getElementById('box7');
     const box8 = document.getElementById('box8');
-    const box9 = document.getElementById('box9');
-    
-    return {box1, box2, box3, box4, box5, box6, box7, box8, box9};
-})(); //IFFY END HERE --------------------!!
+    const box9 = document.getElementById('box9');    
+    const clearBoard = clearFunction();
+    function clearFunction() {
+        return (() => {
+            document.querySelector('.reset').addEventListener('click', () => {
+                box1.innerHTML = "";
+                box2.innerHTML = "";
+                box3.innerHTML = "";
+                box4.innerHTML = "";
+                box5.innerHTML = "";
+                box6.innerHTML = "";
+                box7.innerHTML = "";
+                box8.innerHTML = "";
+                box9.innerHTML = "";
+            });
+        })();
+    }
+
+return {box1, box2, box3, box4, box5, box6, box7, box8, box9, clearBoard};
+
+})(); //IIFE END HERE --------------------!!
+
+
 
 // --player-- Factory ~~~~~~~~~~~~~~#
 function player(name, piece) {
@@ -76,7 +80,7 @@ console.log(jim.piece)
 console.log(bob.piece)
 
 
-// --game-- object to control game flow. 
+
 
 //displayController = module
 

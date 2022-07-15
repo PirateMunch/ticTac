@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="style.css">
 
@@ -12,17 +15,39 @@
         <header>Tic Tac Toe</header>
             <main>
                 <section>
-                    <div id="gameBoard">
-                        <div id="box1" class="gameBox">1</div>
-                        <div id="box2" class="gameBox">2</div>
-                        <div id="box3" class="gameBox">3</div>
-                        <div id="box4" class="gameBox">4</div>
-                        <div id="box5" class="gameBox">5</div>
-                        <div id="box6" class="gameBox">6</div>
-                        <div id="box7" class="gameBox">7</div>
-                        <div id="box8" class="gameBox">8</div>
-                        <div id="box9" class="gameBox">9</div>
+                    <div class="playSelect">
+                    <div class="play1">
+                        <label for="player1">Player 1</label>
+                        <input type="text" class="player" id="player1" placeholder="enter your name!">
+                        <select name="icon1" id="player1">
+                            <option value="">--choose icon--</option>
+                            <option value="X">X</option>
+                            <option value="O">O</option>
+                        </select>
                     </div>
+                    <div class="play2">
+                        <label for="player2">Player 2</label>
+                        <input type="text" class="player" id="player2" placeholder="computer">
+                        <select name="icon2" id="player2">
+                            <option value="">--choose icon--</option>
+                            <option value="X">X</option>
+                            <option value="O">O</option>
+                        </select>
+                    </div>
+                    <button id="startBtn">Start Game</button>
+                    </div>
+                    <div id="gameBoard">
+                        <div id="box1" class="gameBox"></div>
+                        <div id="box2" class="gameBox"></div>
+                        <div id="box3" class="gameBox"></div>
+                        <div id="box4" class="gameBox"></div>
+                        <div id="box5" class="gameBox"></div>
+                        <div id="box6" class="gameBox"></div>
+                        <div id="box7" class="gameBox"></div>
+                        <div id="box8" class="gameBox"></div>
+                        <div id="box9" class="gameBox"></div>
+                    </div>
+                    <input type="button" class="reset" value="Reset Board">
                 </section>
             </main>
         <footer>

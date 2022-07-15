@@ -1,6 +1,13 @@
+:root {
+    --robo: 'Roboto Slab', serif;
+}
+
 
 body {
-background: linear-gradient(90deg, rgba(158, 189, 117, 0), rgba(222, 255, 199, 0.6));
+    margin: 0;
+    padding: 0;
+    font-family: var(--robo);
+    background: linear-gradient(90deg, rgba(158, 189, 117, 0), rgba(222, 255, 199, 0.6));
 }
 
 header {
@@ -8,14 +15,59 @@ header {
     font-size: 2rem;
 }
 
+section {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+}
 
+/* play Select area */
+.playSelect {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.playSelect>div {
+    display: grid;
+    gap: .7rem;
+    text-align: center;
+    padding: .5rem;
+}
+
+input, select {
+    justify-self: center;
+    color: red;
+    text-align: center;
+    max-width: 70%;
+    border: 0;
+    background-color: white;
+    border-radius: 8px;
+}
+
+#startBtn {
+    display: flex;
+    justify-self: center;
+    align-content: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin-top: 1rem;
+    padding: .5rem 1rem;
+    color: red;
+    font-size: 1.4rem;
+    background-color: aquamarine;
+    border-radius: 12px;
+    border: 0;
+}
+
+
+/* ----- gameboard styles ----- */
 #gameBoard {
     display: grid;
     gap: 1px;
     grid-template-columns: repeat(3, 5rem);
     grid-template-rows: repeat(3, 5rem);
     justify-content: center;
-    margin: 3rem 0;
+    margin: 2rem 0;
 }
 
 .gameBox {
@@ -24,14 +76,27 @@ header {
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-}
-
-div>div {
     padding: 10px;
     background-color: aquamarine;
 }
+ 
 
-/* footer style */
+/* ----- reset button ----- */
+.reset {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: .5rem 1rem;
+    color: red;
+    font-size: 1.4rem;
+    background-color: aquamarine;
+    border-radius: 12px;
+    border: 0;
+}
+
+
+
+/* ----- footer style ----- */
 footer {
     display: flex;
     font-family: var(--font-robo);
