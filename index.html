@@ -15,8 +15,8 @@
         <header>Tic Tac Toe</header>
             <main>
                 <section>
-                    <div class="playSelect">
-                    <div class="play1">
+                    <div id="playSelect">
+                    <!-- <div class="play1">
                         <label for="player1">Player 1</label>
                         <input type="text" class="player" id="player1" placeholder="enter your name!">
                         <select name="icon1" id="player1">
@@ -33,19 +33,20 @@
                             <option value="X">X</option>
                             <option value="O">O</option>
                         </select>
+                    </div> -->
+                    <input type="button" id="startBtn" value="Start Game">
                     </div>
-                    <button id="startBtn">Start Game</button>
-                    </div>
+                    <input type="button" id="testbox" value="Test Info">
                     <div id="gameBoard">
-                        <div id="box1" class="gameBox"></div>
-                        <div id="box2" class="gameBox"></div>
-                        <div id="box3" class="gameBox"></div>
-                        <div id="box4" class="gameBox"></div>
-                        <div id="box5" class="gameBox"></div>
-                        <div id="box6" class="gameBox"></div>
-                        <div id="box7" class="gameBox"></div>
-                        <div id="box8" class="gameBox"></div>
-                        <div id="box9" class="gameBox"></div>
+                        <div id="box1" class="gameBox" data-value="1"></div>
+                        <div id="box2" class="gameBox" data-value="2"></div>
+                        <div id="box3" class="gameBox" data-value="3"></div>
+                        <div id="box4" class="gameBox" data-value="4"></div>
+                        <div id="box5" class="gameBox" data-value="5"></div>
+                        <div id="box6" class="gameBox" data-value="6"></div>
+                        <div id="box7" class="gameBox" data-value="7"></div>
+                        <div id="box8" class="gameBox" data-value="8"></div>
+                        <div id="box9" class="gameBox" data-value="9"></div>
                     </div>
                     <input type="button" class="reset" value="Reset Board">
                 </section>

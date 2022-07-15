@@ -82,7 +82,7 @@ input, select {
  
 
 /* ----- reset button ----- */
-.reset {
+#testbox, #submitBtn, .reset {
     display: flex;
     justify-content: center;
     align-self: center;
