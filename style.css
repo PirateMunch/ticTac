@@ -27,11 +27,8 @@ section {
     grid-template-columns: 1fr 1fr;
 }
 
-.playSelect>div {
-    display: grid;
-    gap: .7rem;
-    text-align: center;
-    padding: .5rem;
+.play1, .play2 {
+    margin: 1rem 2rem;
 }
 
 input, select {
@@ -46,17 +43,15 @@ input, select {
 
 #startBtn {
     display: flex;
-    justify-self: center;
-    align-content: center;
-    grid-column-start: 1;
-    grid-column-end: 3;
-    margin-top: 1rem;
+    justify-content: center;
+    align-self: center;
     padding: .5rem 1rem;
     color: red;
     font-size: 1.4rem;
     background-color: aquamarine;
     border-radius: 12px;
     border: 0;
+    margin-bottom: 1rem;
 }
 
 
@@ -80,9 +75,21 @@ input, select {
     background-color: aquamarine;
 }
  
+#submitBtn {
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    padding: .5rem 1rem;
+    color: red;
+    font-size: 1.4rem;
+    background-color: aquamarine;
+    border-radius: 12px;
+    border: 0;
+    margin: 1rem 0;
+}
 
 /* ----- reset button ----- */
-#testbox, #submitBtn, .reset {
+#testbox, .reset {
     display: flex;
     justify-content: center;
     align-self: center;
