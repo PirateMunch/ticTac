@@ -16,29 +16,43 @@ const game = (() => {     // --game-- object to control game flow.
     // --- user Input logic here --- //
     document.querySelectorAll('.gameBox').forEach(item => {
         item.addEventListener('click', () =>{
+            //clone players from factory....but will run every click ARG
+            
         const gameDisplay = gameboard.gameArray;
-        const player = gameboard.submitFunction();
-        console.log(event)
+        const playerArray = gameboard.submitFunction();
+        const newObjects = {...playerArray}
+        const user1 = newObjects.thisPlayer1;
+        const user2 = newObjects.thisPlayer2;
 
-        const user1 = player.thisPlayer1;
-        const user2 = player.thisPlayer2;
-        //random player goes first, --tell ui this
-        const randomStart = ['true', 'false'][Math.round(Math.random())];
-        
         
         console.log(gameDisplay[0])
-        console.log(item.innerText)
+        console.log(user1)
+
+        function swapPlay () {
+            if (user1.turn = "true") {
+                user1.turn = "false";
+                user2.turn = "true;"
+            } 
+            else {
+                user1.turn = "true";
+                user2.turn = "false";
+            }
+            
+        }
 
         const playGame = (() => {
-            user1.turn = randomStart
-        if (user1.turn == "true" ) {
+        if (user1.piece == "true" ) {
             item.innerText = user1.piece
+            swapPlay()
             console.log("BOB")
         } 
         else {
             item.innerText = user2.piece
             console.log("BILLY")
-        }   //else always fires here----
+            swapPlay()
+
+        }   // was billy now its always bob.
+        // now random....
 
 
             getWin = "ME"
@@ -232,7 +246,9 @@ const gameboard = (() => {
 
                 // --- Begin Game button --- // 
             
-    function submitFunction() {                
+    function submitFunction() { 
+        
+    
         const user1 = document.getElementById("player1").value;
         const user2 = document.getElementById("player2").value;
         const user1select = document.getElementById("select1").value;
@@ -280,6 +296,9 @@ return {box1, box2, box3, box4, box5, box6, box7, box8, box9, gameArray, submitF
 // --player-- Factory ~~~~~~~~~~~~~~#
 function player(name, piece, turn) {
     const wins = 0;
+    //random player goes first, --tell ui this
+    // const randomStart = ['true', 'false'][Math.round(Math.random())];
+    // turn = randomStart;
     function getPiece() 
         {return piece}
 
