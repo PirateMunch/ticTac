@@ -12,26 +12,42 @@
 // eventlistener function IFFY?   ----start
 const game = (() => {     // --game-- object to control game flow. 
     
+
     // --- user Input logic here --- //
     document.querySelectorAll('.gameBox').forEach(item => {
         item.addEventListener('click', () =>{
-        const player = gameboard.submitFunction();
-        
-        //item = gamebox.
         const gameDisplay = gameboard.gameArray;
-        console.log(player.thisPlayer1.piece)
+        const player = gameboard.submitFunction();
+        console.log(event)
 
-     
+        const user1 = player.thisPlayer1;
+        const user2 = player.thisPlayer2;
+        //random player goes first, --tell ui this
+        const randomStart = ['true', 'false'][Math.round(Math.random())];
+        
+        
+        console.log(gameDisplay[0])
+        console.log(item.innerText)
 
-        if(player.thisPlayer1.turn === true) {
-            item.innerHTML = player.thisPlayer1.piece
-    
+        const playGame = (() => {
+            user1.turn = randomStart
+        if (user1.turn == "true" ) {
+            item.innerText = user1.piece
+            console.log("BOB")
+        } 
+        else {
+            item.innerText = user2.piece
+            console.log("BILLY")
+        }   //else always fires here----
 
-        } else {
-            item.innerHTML = player.thisPlayer2.piece
-    
-        }
-         console.log(gameDisplay)
+
+            getWin = "ME"
+
+        {return getWin}
+        })();
+
+ 
+
         
         })
     }); 
@@ -48,10 +64,6 @@ const game = (() => {     // --game-- object to control game flow.
             console.log()
         }
     });
-
-
-
-
     
 })();      //-----event end
 
@@ -70,12 +82,45 @@ const gameboard = (() => {
     const box9 = document.getElementById('box9');    
     const gameArray = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
 
+    disableForm();
+    function disableForm() {
+        let element = document.querySelector('#submitBtn') !== null;
+        if (element) {
+        document.querySelector('#submitBtn').addEventListener('click',() => {   
+        bobit = gameboard.submitFunction();
+        console.log(bobit.thisPlayer1.piece)
+        document.getElementById('playSelect').innerHTML = ""
+        alert("Finiish Game or Reset Game")
+        })} else {
+            console.log("do stuff")
+        }
+
+    };
     
     document.querySelector('#startBtn').addEventListener('click', () => {
         const gameDisplay = gameboard.gameArray;
+
+        let formInfo = document.querySelector('#select1') !== null;
+        if (formInfo) {
+            console.log("WELLL")
+            console.log(this)
+            console.log(formInfo)
+            resetForm()
+            alert("hit Reset Board until I can fix this! Simply banging my ResetForm function here doesnt work!! some Closuer issue i think....")
+        } 
+        else {
+        
+    
+
         document.getElementById('startBtn').style.display = "none";
         document.getElementById('playSelect').style.display = "grid";
+
+        console.log(submitFunction.user1select)
+        // if(user1select === "X" || "O") {
+        //     alert("Reset Board or Finish Game")
+        // } else {
             
+        // }
         // clear game board
         gameDisplay.forEach(thisFunction);
             function thisFunction(item) {
@@ -166,6 +211,7 @@ const gameboard = (() => {
         submitBtn.id = "submitBtn";
         submitBtn.innerText = "Begin Game";
         playDiv.appendChild(submitBtn);
+        }
         // form UI END ----
             
     function resetForm() {
@@ -182,6 +228,7 @@ const gameboard = (() => {
        resetForm();
         })
    }) // --start button end
+ 
 
                 // --- Begin Game button --- // 
             
@@ -190,17 +237,13 @@ const gameboard = (() => {
         const user2 = document.getElementById("player2").value;
         const user1select = document.getElementById("select1").value;
         const user2select = document.getElementById("select2").value;
-        //random player goes first, --tell ui this
-        const randomStart = ['true', 'false'][Math.round(Math.random())];
-            console.log(randomStart);
-    
+      
         //get form info and make players
-        const thisP1 = player(user1, user1select, randomStart);
-        const thisP2 = player(user2, user2select);
+        const thisPlayer1 = player(user1, user1select);
+        const thisPlayer2 = player(user2, user2select);
         
-        const thisPlayer1 = thisP1
-        const thisPlayer2 = thisP2
-        return {thisPlayer1, thisPlayer2} 
+
+        return {thisPlayer1, thisPlayer2, user1select} 
     
         };
                 
