@@ -17,36 +17,48 @@
                 <section>
                     <div id="playSelect">
                         <div class="play1">
+                            <div class="playlabel">
                             <label for="player1">Player 1</label>
+                            </div>
                             <input type="text" class="player" id="player1" placeholder="enter your name!">
-                            <select name="icon1" id="player1select">
+                            <select onchange="this.dataset.marker = this.value" name="icon1" id="player1select">
                                 <option value="">--choose icon--</option>
-                                <option value="X">X</option>
+                                <option value="X" class="x">X</option>
                                 <option value="O">O</option>
                             </select>
                         </div>
                         <div class="play2">
-                            <label for="player2">Player 2</label>
+                            <div class="playlabel">
+                            <label for="player2" class="playlabel">Player 2</label>
+                            </div>
                             <input type="text" class="player" id="player2" placeholder="computer">
-                            <select name="icon2" id="player2select">
+                            <select onchange="this.dataset.marker = this.value" name="icon2" id="player2select">
                                 <option value="">--choose icon--</option>
-                                <option value="X">X</option>
+                                <option value="X" class="x">X</option>
                                 <option value="O">O</option>
                             </select>
                         </div> 
                     </div>
                     <input type="button" id="startButton" class="startGame" value="Begin Game">
-                        <div id="gameBoard">
-                            <div id="box1" class="gameBox" data-value></div>
-                            <div id="box2" class="gameBox" data-value></div>
-                            <div id="box3" class="gameBox" data-value></div>
-                            <div id="box4" class="gameBox" data-value></div>
-                            <div id="box5" class="gameBox" data-value></div>
-                            <div id="box6" class="gameBox" data-value></div>
-                            <div id="box7" class="gameBox" data-value></div>
-                            <div id="box8" class="gameBox" data-value></div>
-                            <div id="box9" class="gameBox" data-value></div>
-                        </div>
+                </section>
+                <section>
+                    <input type="button" id="submitButton" class="submit" value="Start New Game">
+                    <div id="gameText" class="gameText">
+            
+                    </div>
+                </section>
+                <section>
+                    <div id="gameBoard">
+                        <div id="box1" class="gameBox" data-value></div>
+                        <div id="box2" class="gameBox" data-value></div>
+                        <div id="box3" class="gameBox" data-value></div>
+                        <div id="box4" class="gameBox" data-value></div>
+                        <div id="box5" class="gameBox" data-value></div>
+                        <div id="box6" class="gameBox" data-value></div>
+                        <div id="box7" class="gameBox" data-value></div>
+                        <div id="box8" class="gameBox" data-value></div>
+                        <div id="box9" class="gameBox" data-value></div>
+                    </div>
                     <input type="button" id="resetButton" class="reset" value="Reset Board">
                 </section>
             </main>

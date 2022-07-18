@@ -11,13 +11,13 @@
 // --player-- Factory ~~~~~~~~~~~~~~###
 function player(name, piece, turn) {
     const wins = 0;
-    this.name = name
-    this.piece = piece
-    this.turn = turn
-    function playerInfo () {
+    this.turn = turn;
+    this.name = name;
+    this.piece = piece;
+    function info() {
         return {name, piece, turn, wins}
     }
-return { name, piece, turn, wins, playerInfo };
+return { name, piece, wins, turn, info};
 } //player Factory End here ~~~~~~~~~~~~~~###
 
 
@@ -26,18 +26,62 @@ return { name, piece, turn, wins, playerInfo };
 const displayController = (() => {
     //get user info.
     //buuild players
-
+    const userForm = document.getElementById('playSelect');
+    const beginButton = document.getElementById('startButton');
+    const submitButton = document.getElementById('submitButton');
+    const gameText = document.getElementById('gameText');
     const user1name = document.getElementById('player1');
     const user1select = document.getElementById('player1select');
+    const user2name = document.getElementById('player2');
+    const user2select = document.getElementById('player2select');
+    const startButton = document.getElementById('startButton');
+   
+    startButton.addEventListener('click', buildGame);
 
+    submitButton.addEventListener('click', showForm);
+
+    //--start new game button--//
+    function showForm () {
+        if(userForm.style.display = "none") {
+            userForm.style.display = "grid";
+            beginButton.style.display = "flex"; 
+            submitButton.style.display = "none";
+            gameText.style.display = "none";
+            //clear board here
+            gameBoard.beginGame()
+        }
+    };
+
+    //--begin game button --submit form user info / css tricks
+    function buildGame () {
+        const user1 = player(user1name.value, user1select.value);
+        const user2 = player(user2name.value, user2select.value);
     
+        console.log(user1.piece)
+
+        console.log(user1.info[0])
+        gameBoard.beginGame();
+        if(userForm.style.display = "grid") {
+           userForm.style.display = "none";
+           beginButton.style.display = "none";
+           submitButton.style.display = "flex";
+           gameText.style.display = "flex";
+        } else {
+           userForm.style.display = "grid"
+           gameText.innerText = "";
+        }
+        if(user1.turn = "X") {
+            console.log(user1.turn)
+            gameText.innerText = `${user1.name} you won the coin toss!\nplace your marker : \n ${user1.piece}`
+        }
+    };
+
 
     function hello () {
         console.log("Hello", gameArray)
     } 
-return {user1name, user1select,hello, };
+return {buildGame, hello};
 })(); // ---- GameBoard funct IIFE END HERE ----!!
-
 
 
 
@@ -47,7 +91,7 @@ const gameBoard = (() => {
     const xClass = "X";
     const oClass = "O";
     const gameBoxs = document.querySelectorAll('[data-value]');
-    const startButton = document.getElementById('startButton');
+    const gameText = document.getElementById('gameText');
     const resetButton = document.getElementById('resetButton');
     const winCombo = [
         [0, 3, 6], [0, 1, 2], [0, 4, 8],
@@ -63,7 +107,7 @@ const gameBoard = (() => {
     //build game board play, and reset all variables at start
     beginGame()
 
-    startButton.addEventListener('click', buildGame);
+
     resetButton.addEventListener('click', beginGame);
     
     function beginGame () {
@@ -79,12 +123,9 @@ const gameBoard = (() => {
             //new play thru
             box.addEventListener('click', playRound, {once : true});
         });
-        //remove show div message
-    };
+        gameText.style.display = "none"
 
-    function buildGame () {
-        console.log(displayController.user1name.value)
-    }
+    };
 
     function playRound(e) {
         const box = e.target;
@@ -93,7 +134,8 @@ const gameBoard = (() => {
         placeMarker(box, currentClass); 
         if (checkWin(currentClass)) {
             console.log("Winner!")
-            endGame(false)
+            gameText.innerText = `${currentClass} Wins` 
+            endGame(false)  
         } else if (checkDraw()) {
             console.log("DRAW")
         } else {
@@ -135,13 +177,16 @@ const gameBoard = (() => {
             console.log("DRAW")
         }
         else {
-            // winningmessageTextEle.innerText = `${currentClass} Wins`
-            console.log(`${playTurn ? "O" : "X"} wins`)
+            // gameText.innerText = `${currentClass} Wins`
+            console.log(`${playTurn ? "X" : "O"} wins`)
         }
         // winningmessage.classList.add('show')
     };
-
-
     // ---- Game gunction Ends here ----//
-return{}
+return{beginGame}
 })();
+
+
+
+
+

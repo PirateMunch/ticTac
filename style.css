@@ -13,34 +13,52 @@ body {
 header {
     text-align: center;
     font-size: 2rem;
+    margin-top: 2rem;
 }
 
 section {
     display: flex;
     flex-direction: column;
-    margin: 2rem 0;
 }
 
 /* ---- play Select area ---- */
-.playSelect {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+
+#playSelect {
+    margin: 3rem 2rem;
+    align-self: center;
+    font-size: 1.3rem;
 }
 
-.play1, .play2 {
-    margin: 1rem 2rem;
+label {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(45deg, rgb(128, 255, 212, .6), rgb(221, 160, 221, .6));
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+  
+}
+
+.play1 > * + *, .play2 > * + * {
+    align-self: center;
+    margin-top: 1rem;
+}
+
+.play2 {
+    margin-top: 2rem;
 }
 
 input, select {
-    justify-self: center;
-    color: red;
+    font-size: 1rem;
     text-align: center;
-    max-width: 70%;
-    border: 0;
-    background-color: white;
+    max-width: 50%;
+    border: outset;
     border-radius: 8px;
+    background: linear-gradient(45deg, rgb(128, 255, 212, .3), rgb(221, 160, 221, .3));;
 }
 
+select {
+    margin-left: 1rem;
+}
 /* ----- gameboard styles ----- */
 #gameBoard {
     display: grid;
@@ -48,7 +66,7 @@ input, select {
     grid-template-columns: repeat(3, 5rem);
     grid-template-rows: repeat(3, 5rem);
     justify-content: center;
-    margin: 2rem 0;
+    margin-bottom: 2rem;
 }
 
 .gameBox {
@@ -58,7 +76,16 @@ input, select {
     justify-content: center;
     font-size: 3rem;
     padding: 10px;
-    background-color: aquamarine;
+    background: linear-gradient(135deg, rgb(128, 255, 212, .6), rgb(221, 160, 221, .6));
+    border: outset;
+}
+
+.O {
+    color: black;
+}
+
+.x, select[data-marker="X"] {
+    color: red;
 }
 
 /* ----- action buttons ----- */
@@ -69,11 +96,34 @@ input, select {
     padding: .5rem 1rem;
     color: red;
     font-size: 1.4rem;
-    background-color: aquamarine;
+    background: linear-gradient(90deg, rgb(128, 255, 212, .6), rgb(221, 160, 221, .6));
     border-radius: 12px;
-    border: 0;
+    border: outset;
+    margin-bottom: 2rem;
 }
 
+.submit {
+    display: none;
+    justify-content: center;
+    align-self: center;
+    padding: .5rem 1rem;
+    color: red;
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, rgb(128, 255, 212, .6), rgb(221, 160, 221, .6));
+    border-radius: 12px;
+    border: outset;    
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* ---- game text ---- */
+.gameText {
+    display: none;
+    margin: 0 3rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
 
 
 /* ----- footer style ----- */
