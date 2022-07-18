@@ -21,7 +21,7 @@ section {
     margin: 2rem 0;
 }
 
-/* play Select area */
+/* ---- play Select area ---- */
 .playSelect {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -40,20 +40,6 @@ input, select {
     background-color: white;
     border-radius: 8px;
 }
-
-#startBtn {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    padding: .5rem 1rem;
-    color: red;
-    font-size: 1.4rem;
-    background-color: aquamarine;
-    border-radius: 12px;
-    border: 0;
-    margin-bottom: 1rem;
-}
-
 
 /* ----- gameboard styles ----- */
 #gameBoard {
@@ -74,22 +60,9 @@ input, select {
     padding: 10px;
     background-color: aquamarine;
 }
- 
-#submitBtn {
-    justify-content: center;
-    justify-self: center;
-    align-self: center;
-    padding: .5rem 1rem;
-    color: red;
-    font-size: 1.4rem;
-    background-color: aquamarine;
-    border-radius: 12px;
-    border: 0;
-    margin: 1rem 0;
-}
 
-/* ----- reset button ----- */
-#testbox, .reset {
+/* ----- action buttons ----- */
+.startGame, .reset {
     display: flex;
     justify-content: center;
     align-self: center;

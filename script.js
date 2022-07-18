@@ -8,300 +8,140 @@
 // in the game, player or gameboard objects.
 
 
-
-// eventlistener function IFFY?   ----start
-const game = (() => {     // --game-- object to control game flow. 
-    
-
-    // --- user Input logic here --- //
-    document.querySelectorAll('.gameBox').forEach(item => {
-        item.addEventListener('click', () =>{
-            //clone players from factory....but will run every click ARG
-            
-        const gameDisplay = gameboard.gameArray;
-        const playerArray = gameboard.submitFunction();
-        const newObjects = {...playerArray}
-        const user1 = newObjects.thisPlayer1;
-        const user2 = newObjects.thisPlayer2;
-
-        
-        console.log(gameDisplay[0])
-        console.log(user1)
-
-        function swapPlay () {
-            if (user1.turn = "true") {
-                user1.turn = "false";
-                user2.turn = "true;"
-            } 
-            else {
-                user1.turn = "true";
-                user2.turn = "false";
-            }
-            
-        }
-
-        const playGame = (() => {
-        if (user1.piece == "true" ) {
-            item.innerText = user1.piece
-            swapPlay()
-            console.log("BOB")
-        } 
-        else {
-            item.innerText = user2.piece
-            console.log("BILLY")
-            swapPlay()
-
-        }   // was billy now its always bob.
-        // now random....
-
-
-            getWin = "ME"
-
-        {return getWin}
-        })();
-
- 
-
-        
-        })
-    }); 
-
-    // --- test button --- //
-
-    document.querySelector('#testbox').addEventListener('click', () => {
-        const gameDisplay = gameboard.gameArray;
-        console.log(gameDisplay)
-
-        gameDisplay.forEach(thisFunction);
-        function thisFunction(item) {
-            // console.log(item)
-            console.log()
-        }
-    });
-    
-})();      //-----event end
-
-
-// --gameBoard-- IIFE module. --------------!!
-//need an Array
-const gameboard = (() => {
-    const box1 = document.getElementById('box1');
-    const box2 = document.getElementById('box2');
-    const box3 = document.getElementById('box3');
-    const box4 = document.getElementById('box4');
-    const box5 = document.getElementById('box5');
-    const box6 = document.getElementById('box6');
-    const box7 = document.getElementById('box7');
-    const box8 = document.getElementById('box8');
-    const box9 = document.getElementById('box9');    
-    const gameArray = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
-
-    disableForm();
-    function disableForm() {
-        let element = document.querySelector('#submitBtn') !== null;
-        if (element) {
-        document.querySelector('#submitBtn').addEventListener('click',() => {   
-        bobit = gameboard.submitFunction();
-        console.log(bobit.thisPlayer1.piece)
-        document.getElementById('playSelect').innerHTML = ""
-        alert("Finiish Game or Reset Game")
-        })} else {
-            console.log("do stuff")
-        }
-
-    };
-    
-    document.querySelector('#startBtn').addEventListener('click', () => {
-        const gameDisplay = gameboard.gameArray;
-
-        let formInfo = document.querySelector('#select1') !== null;
-        if (formInfo) {
-            console.log("WELLL")
-            console.log(this)
-            console.log(formInfo)
-            resetForm()
-            alert("hit Reset Board until I can fix this! Simply banging my ResetForm function here doesnt work!! some Closuer issue i think....")
-        } 
-        else {
-        
-    
-
-        document.getElementById('startBtn').style.display = "none";
-        document.getElementById('playSelect').style.display = "grid";
-
-        console.log(submitFunction.user1select)
-        // if(user1select === "X" || "O") {
-        //     alert("Reset Board or Finish Game")
-        // } else {
-            
-        // }
-        // clear game board
-        gameDisplay.forEach(thisFunction);
-            function thisFunction(item) {
-            item.innerHTML = "";
-            console.log(item.innerHTML);
-            }
-
-        const playDiv = document.getElementById('playSelect');
-        const divPlay1 = document.createElement('div');
-        divPlay1.className = "play1";
-        playDiv.appendChild(divPlay1);
-
-        const label1 = document.createElement('label');
-        const forLabel1 = document.createAttribute('for');
-        forLabel1.value = "player1";
-        label1.setAttributeNode(forLabel1);
-        label1.innerHTML = "player 1";
-        divPlay1.appendChild(label1);
-
-        const input1 = document.createElement('input');
-        input1.type = "text";
-        input1.id = "player1";
-        input1.className = "player";
-        input1.placeholder = "enter name";
-        divPlay1.appendChild(input1);
-
-        const select1 = document.createElement('select');
-        select1.name = "icon1";
-        select1.id = "select1";
-        divPlay1.appendChild(select1);
-
-        const option1pick = document.createElement('option');
-        option1pick.value = "O";
-        option1pick.innerText = "-- Pick X / O --";
-        select1.appendChild(option1pick);
-
-        const option1x = document.createElement('option');
-        option1x.value = "X";
-        option1x.innerText = "X";
-        select1.appendChild(option1x);
-
-        const option1o = document.createElement('option');
-        option1o.value = "O";
-        option1o.innerText = "O";
-        select1.appendChild(option1o);
-
-        // player 2 UI options
-        const divPlay2 = document.createElement('div');
-        divPlay2.className = "play2";
-        playDiv.appendChild(divPlay2);
-
-        const label2 = document.createElement('label');
-        const forLabel2 = document.createAttribute('for');
-        forLabel2.value = "player2";
-        label2.setAttributeNode(forLabel2);
-        label2.innerHTML = "player 2";
-        divPlay2.appendChild(label2);
-
-        const input2 = document.createElement('input');
-        input2.type = "text";
-        input2.id = "player2";
-        input2.className = "player";
-        input2.placeholder = "enter name";
-        divPlay2.appendChild(input2);
-
-        const select2 = document.createElement('select');
-        select2.name = "icon2";
-        select2.id = "select2";
-        divPlay2.appendChild(select2);
-
-        const option2pick = document.createElement('option');
-        option2pick.value = "O";
-        option2pick.innerText = "-- Pick X / O --";
-        select2.appendChild(option2pick);
-
-        const option2x = document.createElement('option');
-        option2x.value = "X";
-        option2x.innerText = "X";
-        select2.appendChild(option2x);
-
-        const option2o = document.createElement('option');
-        option2o.value = "O";
-        option2o.innerText = "O";
-        select2.appendChild(option2o);
-
-        const submitBtn = document.createElement('button');
-        submitBtn.type = "submit";
-        submitBtn.id = "submitBtn";
-        submitBtn.innerText = "Begin Game";
-        playDiv.appendChild(submitBtn);
-        }
-        // form UI END ----
-            
-    function resetForm() {
-        const gameDisplay = gameboard.gameArray;
-        console.log("works")
-        console.log(gameDisplay)
-        // toggle + clear form on reset.
-        document.getElementById('startBtn').style.display = "flex";
-        document.getElementById('playSelect').style.display = "none";
-        }
-
-    document.getElementById('submitBtn').addEventListener('click', () => {
-       submitFunction();
-       resetForm();
-        })
-   }) // --start button end
- 
-
-                // --- Begin Game button --- // 
-            
-    function submitFunction() { 
-        
-    
-        const user1 = document.getElementById("player1").value;
-        const user2 = document.getElementById("player2").value;
-        const user1select = document.getElementById("select1").value;
-        const user2select = document.getElementById("select2").value;
-      
-        //get form info and make players
-        const thisPlayer1 = player(user1, user1select);
-        const thisPlayer2 = player(user2, user2select);
-        
-
-        return {thisPlayer1, thisPlayer2, user1select} 
-    
-        };
-                
-
-        
-        // --- Reset Board --- //
-        resetBoard();
-        function resetBoard() {
-            return (() => {
-                document.querySelector('.reset').addEventListener('click', () => {
-                const gameDisplay = gameboard.gameArray;
-                console.log("works")
-                console.log(gameDisplay)
-                // toggle + clear form on reset.
-                document.getElementById('startBtn').style.display = "flex";
-                document.getElementById('playSelect').style.display = "none";
-                document.getElementById('playSelect').innerHTML = ""
-                    
-                gameDisplay.forEach(thisFunction);
-                    function thisFunction(item) {
-                        item.innerHTML = "";
-                        console.log(item.innerHTML)
-                    }});
-                })();
-            };
-        
-
-return {box1, box2, box3, box4, box5, box6, box7, box8, box9, gameArray, submitFunction};
-   
-})(); //IIFE END HERE --------------------!!
-
-
-
-// --player-- Factory ~~~~~~~~~~~~~~#
+// --player-- Factory ~~~~~~~~~~~~~~###
 function player(name, piece, turn) {
     const wins = 0;
-    //random player goes first, --tell ui this
-    // const randomStart = ['true', 'false'][Math.round(Math.random())];
-    // turn = randomStart;
-    function getPiece() 
-        {return piece}
+    this.name = name
+    this.piece = piece
+    this.turn = turn
+    function playerInfo () {
+        return {name, piece, turn, wins}
+    }
+return { name, piece, turn, wins, playerInfo };
+} //player Factory End here ~~~~~~~~~~~~~~###
 
-return { name, piece, turn, wins, getPiece };
-} //player Factory End here ~~~~~~~~~~~~~~#
 
+
+// --displayController-- IIFE module. --------------!!
+const displayController = (() => {
+    //get user info.
+    //buuild players
+
+    const user1name = document.getElementById('player1');
+    const user1select = document.getElementById('player1select');
+
+    
+
+    function hello () {
+        console.log("Hello", gameArray)
+    } 
+return {user1name, user1select,hello, };
+})(); // ---- GameBoard funct IIFE END HERE ----!!
+
+
+
+
+  // --- Main game function IIFE  ----- //
+ // keeping all  game logic in this module keeps global scope clean
+const gameBoard = (() => {
+    const xClass = "X";
+    const oClass = "O";
+    const gameBoxs = document.querySelectorAll('[data-value]');
+    const startButton = document.getElementById('startButton');
+    const resetButton = document.getElementById('resetButton');
+    const winCombo = [
+        [0, 3, 6], [0, 1, 2], [0, 4, 8],
+        [1,  4, 7], [3 ,4 ,5], [2,4,6],
+        [2, 5 ,  8], [6, 7, 8]
+    ]
+
+    let playTurn;
+
+    //import player info
+
+   
+    //build game board play, and reset all variables at start
+    beginGame()
+
+    startButton.addEventListener('click', buildGame);
+    resetButton.addEventListener('click', beginGame);
+    
+    function beginGame () {
+        playTurn = false
+        
+        // click eventListener that only allows 1 click on the div per reload
+        gameBoxs.forEach(box => {
+            //reset  board before new play thru
+            box.classList.remove(oClass);
+            box.classList.remove(xClass);
+            box.innerText = "";
+            box.removeEventListener('click', playRound);
+            //new play thru
+            box.addEventListener('click', playRound, {once : true});
+        });
+        //remove show div message
+    };
+
+    function buildGame () {
+        console.log(displayController.user1name.value)
+    }
+
+    function playRound(e) {
+        const box = e.target;
+        const currentClass = playTurn ? xClass : oClass
+        console.log(e.target);
+        placeMarker(box, currentClass); 
+        if (checkWin(currentClass)) {
+            console.log("Winner!")
+            endGame(false)
+        } else if (checkDraw()) {
+            console.log("DRAW")
+        } else {
+            swapTurns()
+        }
+    };
+    
+    // Swap current playTurn value != itself to invoke ternary next loop
+    function swapTurns() {
+        playTurn = !playTurn
+    };
+
+    // add X/O to board and push to boardArray
+    function placeMarker (box, currentClass) {
+        box.classList.add(currentClass)
+        box.innerText = currentClass
+    return{box, currentClass}
+    };
+
+    //compare winCombo array to box class list
+    function checkWin(currentClass) {
+        return winCombo.some(combination => {
+            return combination.every(index => {
+                return gameBoxs[index].classList.contains(currentClass)
+            })
+        })
+    };
+
+    //turn gameBox elements into an Array to use new array methods
+    function checkDraw() {
+        return [...gameBoxs].every(box => {
+            return box.classList.contains(oClass) ||
+            box.classList.contains(xClass)
+        })
+    };   
+
+    function endGame(draw) {
+        if (draw) {
+            console.log("DRAW")
+        }
+        else {
+            // winningmessageTextEle.innerText = `${currentClass} Wins`
+            console.log(`${playTurn ? "O" : "X"} wins`)
+        }
+        // winningmessage.classList.add('show')
+    };
+
+
+    // ---- Game gunction Ends here ----//
+return{}
+})();
