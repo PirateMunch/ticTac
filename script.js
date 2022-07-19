@@ -31,8 +31,6 @@ const displayController = (() => {
     const submitButton = document.getElementById('submitButton');
     const gameText = document.getElementById('gameText');
 
-    
-
     submitButton.addEventListener('click', showForm);
 
     //--start new game button--//
@@ -43,7 +41,7 @@ const displayController = (() => {
             submitButton.style.display = "none";
             gameText.style.display = "none";
             //clear board here
-            gameBoard.beginGame()
+            // gameBoard.beginGame()
         }
     };
 
@@ -77,7 +75,7 @@ const gameBoard = (() => {
         [2, 5 ,  8], [6, 7, 8]
     ]
 
-    let roundCount;
+    let roundCount = 0;
     let playTurn;
     let user1;
     let user2;
@@ -111,13 +109,21 @@ const gameBoard = (() => {
         //assign random start - begin text
         if(user1.play > 0.5) {
             gameText.innerText = `${user1.name} won the coin toss to go first.\n---\nplace your marker : \n ${user1.piece}`
-            user1.turn = true;
-            user2.turn = false;
+            if(user1.piece === "X") {
+                playTurn = false
+            }
+            else {
+                playTurn = true
+            }
         }
         else {
             gameText.innerText = `${user2.name} won the coin toss to go first.\n---\nplace your marker : \n ${user2.piece}`
-            user2.turn = true;
-            user1.turn = false;
+            if(user2.piece === "X") {
+                playTurn = true
+            }
+            else {
+                playTurn = false
+            }
         }
         scoreText.innerText = ""
         roundCount = 0
@@ -130,18 +136,27 @@ const gameBoard = (() => {
     //build game board play, and reset all variables at start
     beginGame()
     function beginGame () {
-        if(user1.turn > 0.5) {
-            playTurn = true
-        } 
-        else {
-            playTurn = false
-        }
         
-        if(roundCount >0 ) {
+
+        if(roundCount % 2 == 0 ) {
+            playTurn = false //X
             console.log(roundCount, "pos")
+                if(user1.piece === "X") {
+                gameText.innerText = `New Round!\n ${user2.name}'s turn to start`
+            }
+                else {
+                    gameText.innerText = `New Round!\n ${user1.name}'s turn to start`
+                }
         }
         else  {
+            playTurn = true //O
             console.log(roundCount, "neg")
+                if(user1.piece === "O") {
+                    gameText.innerText = `New Round!\n ${user2.name}'s turn to start`
+                }
+                else {
+                    gameText.innerText = `New Round!\n ${user1.name}'s turn to start`
+                }
         }
         // click eventListener that only allows 1 click on the div per reload
         gameBoxs.forEach(box => {
@@ -154,7 +169,7 @@ const gameBoard = (() => {
     
             box.addEventListener('click', playRound, {once : true});
         });
-        gameText.innerText = "New Round!"
+       
     };
 
     function playRound(e) {
@@ -163,7 +178,7 @@ const gameBoard = (() => {
         const box = e.target;
         const currentClass = playTurn ? xClass : oClass 
         let oppersiteClass = playTurn ? oClass : xClass
-        console.log(e.target);
+
         placeMarker(box, currentClass); 
         if (checkWin(currentClass)) {
             if (currentClass == user1.piece) {
@@ -248,7 +263,6 @@ const gameBoard = (() => {
             console.log("DRAW")
             pauseClicks()
             check3wins()
-            swapTurns()
         }
         else {
             // gameText.innerText = `${currentClass} Wins`
@@ -257,7 +271,6 @@ const gameBoard = (() => {
             console.log(user2.wins)
             pauseClicks()
             check3wins()
-            swapTurns()
         }
         // winningmessage.classList.add('show')
     };
