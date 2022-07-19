@@ -1,12 +1,3 @@
-// Rule of thumb: if you only ever need ONE of something 
-//(gameBoard, displayController), use a module. 
-//If you need multiples of something (players!), 
-//create them with factories.
-
-//Think carefully about where each bit of logic should reside. 
-//Each little piece of functionality should be able to fit 
-// in the game, player or gameboard objects.
-
 
 // --player-- Factory ~~~~~~~~~~~~~~###
 function player(name, piece, turn) {
@@ -18,44 +9,7 @@ function player(name, piece, turn) {
         return {name, piece, turn, wins}
     }
 return { name, piece, wins, turn, info};
-} //player Factory End here ~~~~~~~~~~~~~~###
-
-
-
-// --displayController-- IIFE module. --------------!!
-const displayController = (() => {
-    //get user info.
-    //buuild players
-    const userForm = document.getElementById('playSelect');
-    const startButton = document.getElementById('startButton');
-    const submitButton = document.getElementById('submitButton');
-    const gameText = document.getElementById('gameText');
-
-    submitButton.addEventListener('click', showForm);
-
-    //--start new game button--//
-    function showForm () {
-        if(userForm.style.display = "none") {
-            userForm.style.display = "grid";
-            startButton.style.display = "flex"; 
-            submitButton.style.display = "none";
-            gameText.style.display = "none";
-            //clear board here
-            // gameBoard.beginGame()
-        }
-    };
-
-
-
-    
-
-    function hello () {
-        console.log("Hello", gameArray)
-    } 
-return {hello};
-})(); // ---- GameBoard funct IIFE END HERE ----!!
-
-
+} //player Factory End here ~~~~//
 
   // --- Main game function IIFE  ----- //
  // keeping all  game logic in this module keeps global scope clean
@@ -74,15 +28,28 @@ const gameBoard = (() => {
         [1,  4, 7], [3 ,4 ,5], [2,4,6],
         [2, 5 ,  8], [6, 7, 8]
     ]
-
     let roundCount = 0;
     let playTurn;
     let user1;
     let user2;
 
-    //import player info
-    startButton.addEventListener('click', buildGame);
+    submitButton.addEventListener('click', showForm);
+    //--start new game button--//
+    function showForm () {
+        if(startButton.style.display = "none") {
+            userForm.style.display = "grid";
+            startButton.style.display = "flex"; 
+            submitButton.style.display = "none";
+            gameText.style.display = "none";
+        }
+        else {
+            userForm.style.display = "none";
+            startButton.style.display = "flex"
+            submitButton.style.display = "none"
+        }
+    };
 
+    startButton.addEventListener('click', buildGame);
         //--begin game button --submit form user info / css tricks
     function buildGame () {
         const user1name = document.getElementById('player1');
@@ -93,15 +60,13 @@ const gameBoard = (() => {
         user1 = player(user1name.value, user1select.value, user1play);
         user2 = player(user2name.value, user2select.value);
     
-        console.log(user1.piece)
-
-        console.log(user1.info)
         beginGame();
         //build gameText
         if(userForm.style.display = "grid") {
            userForm.style.display = "none";
            startButton.style.display = "none";
            submitButton.style.display = "flex";
+           resetButton.style.display = "flex";
            gameText.style.display = "flex";
         } else {
            userForm.style.display = "grid"           
@@ -130,32 +95,26 @@ const gameBoard = (() => {
     {return user1, user2}
     };
 
-    // -- playRound button
+    // -- playRound button --
     resetButton.addEventListener('click', beginGame);
-
     //build game board play, and reset all variables at start
-    beginGame()
     function beginGame () {
-        
-
         if(roundCount % 2 == 0 ) {
-            playTurn = false //X
-            console.log(roundCount, "pos")
+            playTurn = false // "X"
                 if(user1.piece === "X") {
-                gameText.innerText = `New Round!\n ${user2.name}'s turn to start`
+                gameText.innerText = `New Round!\n ---\n${user2.name}'s turn to start`
             }
                 else {
-                    gameText.innerText = `New Round!\n ${user1.name}'s turn to start`
+                    gameText.innerText = `New Round!\n ---\n${user1.name}'s turn to start`
                 }
         }
         else  {
-            playTurn = true //O
-            console.log(roundCount, "neg")
+            playTurn = true // "O"
                 if(user1.piece === "O") {
-                    gameText.innerText = `New Round!\n ${user2.name}'s turn to start`
+                    gameText.innerText = `New Round!\n ---\n${user2.name}'s turn to start`
                 }
                 else {
-                    gameText.innerText = `New Round!\n ${user1.name}'s turn to start`
+                    gameText.innerText = `New Round!\n ---\n${user1.name}'s turn to start`
                 }
         }
         // click eventListener that only allows 1 click on the div per reload
@@ -164,17 +123,11 @@ const gameBoard = (() => {
                    box.classList.remove(oClass);
                    box.classList.remove(xClass);
                    box.innerText = "";
-                   
-            //new play thru
-    
             box.addEventListener('click', playRound, {once : true});
         });
-       
     };
 
     function playRound(e) {
-
-
         const box = e.target;
         const currentClass = playTurn ? xClass : oClass 
         let oppersiteClass = playTurn ? oClass : xClass
@@ -182,12 +135,12 @@ const gameBoard = (() => {
         placeMarker(box, currentClass); 
         if (checkWin(currentClass)) {
             if (currentClass == user1.piece) {
-                gameText.innerText = `${currentClass}'s Win\nWell done ${user1.name}!` 
+                gameText.innerText = `${currentClass}'s Win\n---\nWell done ${user1.name}!` 
                 user1.wins = user1.wins +1
                 roundCount = roundCount + 1
             }
             else {
-                gameText.innerText = `${currentClass}'s Win\nWell done ${user2.name}!` 
+                gameText.innerText = `${currentClass}'s Win\n---\nWell done ${user2.name}!` 
                 user2.wins = user2.wins +1
                 roundCount = roundCount +1
             }
@@ -195,7 +148,7 @@ const gameBoard = (() => {
             endGame(false)  
         } else if (checkDraw()) {
             roundCount = roundCount + 1
-            gameText.innerText = "It's a Draw! \n Play again"
+            gameText.innerText = "It's a Draw! \n---\n Play again"
             showScore()
         } else {
             swapTurns()
@@ -214,7 +167,7 @@ const gameBoard = (() => {
             scoreText.innerText = gameText.innerText
         }
         else {
-            scoreText.innerText = `Current Round : ${roundCount +1}\n
+            scoreText.innerText = `Current Round : ${roundCount +1}
             ${user1.name}'s wins : ${user1.wins}
             ${user2.name}'s wins : ${user2.wins}`
         }
@@ -222,10 +175,12 @@ const gameBoard = (() => {
 
     function check3wins () {
         if (user1.wins === 3) {
-            gameText.innerText = `Start a new game!\n ${user1.name} has won 3 games!`
+            gameText.innerText = `Start a new game!\n ---\n${user1.name} has won 3 games!`
+            resetButton.style.display = "none"
         }
         if (user2.wins === 3) {
-            gameText.innerText = `Start a new game!\n ${user2.name} has won 3 games!`
+            gameText.innerText = `Start a new game!\n ---\n${user2.name} has won 3 games!`
+            resetButton.style.display = "none"
         }
     };
     
@@ -234,7 +189,7 @@ const gameBoard = (() => {
         playTurn = !playTurn
     };
 
-    // add X/O to board and push to boardArray
+    // add X/O to board and push add to classlist of divbox
     function placeMarker (box, currentClass) {
         box.classList.add(currentClass)
         box.innerText = currentClass
@@ -260,19 +215,13 @@ const gameBoard = (() => {
 
     function endGame(draw) {
         if (draw) {
-            console.log("DRAW")
             pauseClicks()
             check3wins()
         }
         else {
-            // gameText.innerText = `${currentClass} Wins`
-            console.log(`${playTurn ? "X" : "O"} wins`)
-            console.log(user1.wins)
-            console.log(user2.wins)
             pauseClicks()
             check3wins()
         }
-        // winningmessage.classList.add('show')
     };
 
     function pauseClicks () {
@@ -281,7 +230,6 @@ const gameBoard = (() => {
         })
     }
     // ---- Game gunction Ends here ----//
-return{beginGame}
 })();
 
 

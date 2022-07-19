@@ -1,7 +1,7 @@
 :root {
     --robo: 'Roboto Slab', serif;
-}
 
+}
 
 body {
     margin: 0;
@@ -24,6 +24,7 @@ section {
 /* ---- play Select area ---- */
 
 #playSelect {
+    display: none;
     margin: 1.5rem 2rem;
     align-self: center;
     font-size: 1.3rem;
@@ -72,7 +73,6 @@ select {
     grid-template-columns: repeat(3, 5rem);
     grid-template-rows: repeat(3, 5rem);
     justify-content: center;
-    margin-bottom: 2rem;
 }
 
 .gameBox {
@@ -95,8 +95,19 @@ select {
 }
 
 /* ----- action buttons ----- */
-.startGame, .reset {
+.startGame {
+    display: none;
+}
+
+.submit {
     display: flex;
+}
+
+.reset {
+    display: flex;
+}
+
+.reset, .submit, .startGame {
     justify-content: center;
     align-self: center;
     padding: .5rem 1rem;
@@ -105,21 +116,7 @@ select {
     background: linear-gradient(90deg, rgb(128, 255, 212, .6), rgb(221, 160, 221, .6));
     border-radius: 12px;
     border: outset;
-    margin-bottom: 2rem;
-}
-
-.submit {
-    display: none;
-    justify-content: center;
-    align-self: center;
-    padding: .5rem 1rem;
-    color: red;
-    font-size: 1.4rem;
-    background: linear-gradient(90deg, rgb(128, 255, 212, .6), rgb(221, 160, 221, .6));
-    border-radius: 12px;
-    border: outset;    
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin: 1rem 0;
 }
 
 /* ---- game text ---- */
@@ -127,17 +124,15 @@ select {
     display: none;
     justify-content: center;
     margin: 0 3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     text-align: center;
 }
 
 .scoreText {
     font-size: 1.3rem;
-    margin-bottom: 1.2rem;
     text-align: center;
 }
-
 
 /* ----- footer style ----- */
 footer {
