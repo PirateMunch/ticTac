@@ -59,7 +59,12 @@ const gameBoard = (() => {
         const user1play = Math.random();
         user1 = player(user1name.value, user1select.value, user1play);
         user2 = player(user2name.value, user2select.value);
-    
+        if(user2.name == "") {
+            console.log("YUPYUP")
+            playAI()  // stop buildGame and jump to playAI
+        }
+        else {
+        console.log(user2.piece)
         beginGame();
         //build gameText
         if(userForm.style.display = "grid") {
@@ -93,6 +98,7 @@ const gameBoard = (() => {
         scoreText.innerText = ""
         roundCount = 0
     {return user1, user2}
+        }
     };
 
     // -- playRound button --
@@ -161,7 +167,6 @@ const gameBoard = (() => {
         }
     };
 
-
     function showScore () {
         if (user1.wins === 3 || user2.wins === 3) {
             scoreText.innerText = gameText.innerText
@@ -187,6 +192,7 @@ const gameBoard = (() => {
     // Swap current playTurn value != itself to invoke ternary next loop
     function swapTurns() {
         playTurn = !playTurn
+        aiTurn(playTurn)
     };
 
     // add X/O to board and push add to classlist of divbox
@@ -228,6 +234,61 @@ const gameBoard = (() => {
         gameBoxs.forEach(box => {
             box.removeEventListener('click', playRound)
         })
+    };
+
+
+    //  --- play AI function --
+    function playAI () {
+        console.log("AI GOO")
+
+        const playerPiece = user1.piece
+        if (playerPiece === "X") {
+            compPiece = "O"
+        } else {
+            compPiece = "X"
+        };
+
+        user2 = player("Bob the Bot", compPiece)
+        if(userForm.style.display = "grid") {
+            userForm.style.display = "none";
+            startButton.style.display = "none";
+            submitButton.style.display = "flex";
+            resetButton.style.display = "flex";
+            gameText.style.display = "flex";
+         } else {
+            userForm.style.display = "grid"           
+         }
+         //assign random start - begin text
+         if(user1.play > 0.5) {
+             gameText.innerText = `${user1.name} won the coin toss to go first.\n---\nplace your marker : \n ${user1.piece}`
+             if(user1.piece === "X") {
+                 playTurn = false
+             }
+             else {
+                 playTurn = true
+             }
+         }
+         else {
+             gameText.innerText = `${user2.name} won the coin toss to go first.\n---\nplace your marker : \n ${user2.piece}`
+             if(user2.piece === "X") {
+                 playTurn = true
+             }
+             else {
+                 playTurn = false
+             }
+         }
+         console.log(user2.name)
+         beginGame()
+    }
+
+    function aiTurn () {
+        if (user2.piece === "O" && playTurn === true) {
+        console.log("DO S TUFF COMP")
+        }
+        if (user2.piece === "X" && playTurn === false) {
+            console.log("GO COMMP CO")
+        }
+        // loop classlist array to find move...
     }
     // ---- Game gunction Ends here ----//
 })();
