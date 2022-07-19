@@ -124,19 +124,25 @@ const gameBoard = (() => {
     {return user1, user2}
     };
 
+    // -- playRound button
     resetButton.addEventListener('click', beginGame);
 
-    
     //build game board play, and reset all variables at start
     beginGame()
     function beginGame () {
         if(user1.turn > 0.5) {
-            playTurn = false
+            playTurn = true
         } 
         else {
-            playTurn = true
+            playTurn = false
         }
         
+        if(roundCount >0 ) {
+            console.log(roundCount, "pos")
+        }
+        else  {
+            console.log(roundCount, "neg")
+        }
         // click eventListener that only allows 1 click on the div per reload
         gameBoxs.forEach(box => {
                    //reset board 
@@ -179,10 +185,10 @@ const gameBoard = (() => {
         } else {
             swapTurns()
             if(currentClass == user1.piece) {
-                gameText.innerText = `${user1.name} has placed their '${currentClass}'\n---\n${user2.name}'s turn,\n place your '${oppersiteClass}'`
+                gameText.innerText = `'${currentClass}' was placed.\n---\n${user2.name}'s turn,\n place your '${oppersiteClass}'`
             }
             else {
-                gameText.innerText = `${user2.name} has placed their '${currentClass}'\n---\n${user1.name}'s turn,\n place your '${oppersiteClass}'`
+                gameText.innerText = `'${currentClass}' was placed.\n---\n${user1.name}'s turn,\n place your '${oppersiteClass}'`
             }
         }
     };
