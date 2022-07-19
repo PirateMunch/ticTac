@@ -13,7 +13,7 @@ body {
 header {
     text-align: center;
     font-size: 2rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 section {
@@ -24,7 +24,7 @@ section {
 /* ---- play Select area ---- */
 
 #playSelect {
-    margin: 3rem 2rem;
+    margin: 1.5rem 2rem;
     align-self: center;
     font-size: 1.3rem;
 }
@@ -40,7 +40,13 @@ label {
 
 .play1 > * + *, .play2 > * + * {
     align-self: center;
-    margin-top: 1rem;
+}
+
+.play1, .play2 {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 1rem;
 }
 
 .play2 {
@@ -50,7 +56,7 @@ label {
 input, select {
     font-size: 1rem;
     text-align: center;
-    max-width: 50%;
+    max-width: 70%;
     border: outset;
     border-radius: 8px;
     background: linear-gradient(45deg, rgb(128, 255, 212, .3), rgb(221, 160, 221, .3));;
@@ -119,9 +125,16 @@ select {
 /* ---- game text ---- */
 .gameText {
     display: none;
+    justify-content: center;
     margin: 0 3rem;
     margin-bottom: 2rem;
     font-size: 1.5rem;
+    text-align: center;
+}
+
+.scoreText {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
     text-align: center;
 }
 
