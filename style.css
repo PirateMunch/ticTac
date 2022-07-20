@@ -75,7 +75,7 @@ select {
     justify-content: center;
 }
 
-.gameBox {
+#gameBox {
     display: flex;
     color: rgb(230, 93, 93);
     align-items: center;
