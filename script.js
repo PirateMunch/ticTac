@@ -1,4 +1,3 @@
-
 //Player Factory 
 function player(name, piece, turn) {
     let wins = 0;
@@ -8,12 +7,14 @@ function player(name, piece, turn) {
 return { name, piece, wins, turn};
 } 
 
+//display IIFE
 const displayController = (() => {
     const submitButton = document.getElementById('submitButton');
     const startButton = document.getElementById('startButton');
     const resetButton = document.getElementById('resetButton');
     const userForm = document.getElementById('playSelect');
     const gameText = document.getElementById('gameText');
+    let roundCount = 0;
     let playTurn;
     let user1;
     let user2;
@@ -41,7 +42,7 @@ const displayController = (() => {
         const user2name = document.getElementById('player2');
         const user2select = document.getElementById('player2select');
         const user1play = Math.random();
-        let roundCount;
+
         user1 = new player(user1name.value, user1select.value, user1play);
         user2 = new player(user2name.value, user2select.value);
         console.log(user1.name)
@@ -73,7 +74,7 @@ const displayController = (() => {
         }
         scoreText.innerText = ""
         roundCount = 0
-    return {user1, user2, roundCount, playTurn}
+    return user1, user2, roundCount, playTurn
     };
 
     //build gameboard play, and reset all variables at start
@@ -94,11 +95,10 @@ const displayController = (() => {
             }
         }
     };
-
-return {startGame}
+return {startGame, user1, user2}
 })();
 
-// gameBoard function IIFE 
+// gameBoard function 
 const gameBoard = (() => {
     const gameBoxs = document.querySelectorAll('[data-value]');
     const scoreText = document.getElementById('scoreText');
@@ -113,7 +113,6 @@ const gameBoard = (() => {
     let user2 = displayController.startGame().user2;
     let playTurn = displayController.startGame().playTurn;
     let roundCount = displayController.startGame().roundCount;
-
     // --gameBox Listeners
     gameBoxs.forEach(box => {
         box.classList.remove(oClass);
@@ -126,7 +125,7 @@ const gameBoard = (() => {
         const box = e.target;
         const currentClass = playTurn ? oClass : xClass 
         let oppersiteClass = playTurn ? xClass : oClass
-        console.log(user1.name)
+        console.log(displayController.user1)
         placeMarker(box, currentClass); 
         if (checkWin(currentClass)) {
             if (currentClass == this.classList.value) {
@@ -193,7 +192,7 @@ const gameBoard = (() => {
         }
     };
     
-    //Prevent board being clicked
+    //Prevent board being clicked after win/draw
     function pauseClicks () {
         gameBoxs.forEach(box => {
             box.removeEventListener('click', playRound)
