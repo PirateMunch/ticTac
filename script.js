@@ -1,11 +1,12 @@
 //Player Factory 
-function player(name, piece, turn) {
+function player(name, piece, start) {
     let wins = 0;
     let round = 0;
-    this.turn = turn;
+    this.start = start;
     this.name = name;
     this.piece = piece;
-return { name, piece, wins, turn, round};
+    let turn;
+return { name, piece, wins, start, round, turn};
 } 
 
 //display IIFE
@@ -15,19 +16,13 @@ const displayController = (() => {
     const resetButton = document.getElementById('resetButton');
     const userForm = document.getElementById('playSelect');
     const gameText = document.getElementById('gameText');
-
-    let playTurn;
-
     const user1name = document.getElementById('player1');
     const user1select = document.getElementById('player1select');
     const user2name = document.getElementById('player2');
     const user2select = document.getElementById('player2select');
-    const user1play = Math.random();
-
-    
     let user1;
     let user2;
-  
+    let playTurn;
 
     submitButton.addEventListener('click', showForm);
     resetButton.addEventListener('click', resetRound);
@@ -49,6 +44,7 @@ const displayController = (() => {
 
     // Begin game button   
     function startGame () {
+    const user1play = Math.random();
     user1 = new player(user1name.value, user1select.value, user1play);
     user2 = new player(user2name.value, user2select.value);
 
@@ -63,24 +59,28 @@ const displayController = (() => {
            userForm.style.display = "grid"           
         }
         //assign random start - begin text
-        if(user1.play < 0.5) {
-            gameText.innerText = `${user1.name} won the coin toss to go first.\n---\nplace your marker : \n ${user1.piece}`
+        
+          
             if(user1.piece === "X") {
+                gameText.innerText = `${user1.name} won the coin toss to go first.\n---\nplace your marker : \n ${user1.piece}`
                 console.log(user1)
-                playTurn = false
-            } else {
                 playTurn = true
+            } else {
+                playTurn = false
             }
-        } else {
-            gameText.innerText = `${user2.name} won the coin toss to go first.\n---\nplace your marker : \n ${user2.piece}`
+        
+            
             if(user2.piece === "X") {
+                gameText.innerText = `${user2.name} won the coin toss to go first.\n---\nplace your marker : \n ${user2.piece}`
                 playTurn = true
             } else {
                 playTurn = false
             }
-        }
+        
         scoreText.innerText = "";
         user1.round = 0;
+
+        console.log(playTurn)
         
     return {user1, user2, playTurn}
     };
@@ -88,22 +88,17 @@ const displayController = (() => {
     //build gameboard play, and reset all variables at start
     function resetRound () {
         gameBoard.newBoard()
-        if(user1.round % 2 == 0 ) {
-            playTurn = false 
-            if(user1.piece === "X") {
-                gameText.innerText = `New Round!\n ---\n${user2.name}'s turn to start`
-            } else {
-                gameText.innerText = `New Round!\n ---\n${user1.name}'s turn to start`
-            }
-        } else  {
-            playTurn = true 
-            if(user1.piece === "O") {
-                gameText.innerText = `New Round!\n ---\n${user2.name}'s turn to start`
-            } else {
-                gameText.innerText = `New Round!\n ---\n${user1.name}'s turn to start`
-            }
-        }
+        if(user1.turn === true && user1.piece === "X" || user1.piece === "O") {
+            gameText.innerText = `New Round!\n ---\n${user1.name}'s turn to start`
+        
+            playTurn = true
+        } else {
+            gameText.innerText = `New Round!\n ---\n${user2.name}'s turn to start`
+        
+            playTurn = false
+        } 
     };
+    
 
     const getUser1 = () => user1;
     const getUser2 = () => user2;
@@ -134,34 +129,41 @@ const gameBoard = (() =>  {
     function playRound(e) {
         const box = e.target;
         const currentClass = playTurn ? oClass : xClass 
-        let oppersiteClass = playTurn ? xClass : oClass
+        const oppersiteClass = playTurn ? xClass : oClass
         let user1 = displayController.getUser1();
         let user2 = displayController.getUser2();
 
-
-        console.log(user1)
         placeMarker(box, currentClass); 
         if (checkWin(currentClass)) {
-            if (currentClass == this.classList.value) {
+            if (currentClass == user1.piece) {
                 gameText.innerText = `${currentClass}'s Win\n---\nWell done ${user1.name}!` 
                 user1.wins = user1.wins +1
                 user1.round = user1.round +1
+                user1.turn = false
+                swapTurns()
             }
             else {
                 gameText.innerText = `${currentClass}'s Win\n---\nWell done ${user2.name}!` 
                 user2.wins = user2.wins +1
                 user1.round = user1.round +1
+                user1.turn = true
+                swapTurns()
             }
-        showScore (user1, user2)
-        endGame(false)  
+            showScore (user1, user2)
+            endGame(false)  
         } else if (checkDraw()) {
             user1.round = user1.round + 1
             gameText.innerText = "It's a Draw! \n---\n Play again"
-        showScore(user1, user2)
+            if (currentClass === user1.piece) {
+                user1.turn = false
+            } else {
+                user1.turn = true
+            }
+            swapTurns()
+            showScore(user1, user2)
         } else {
-        swapTurns()
-            console.log(this.classList.value)
-            if(currentClass == this.classList.value) {
+            swapTurns()
+            if(currentClass == user2.piece) {
                 gameText.innerText = `'${currentClass}' was placed.\n---\n${user1.name}'s turn,\n place your '${oppersiteClass}'`
             }
             else {
@@ -239,11 +241,12 @@ const gameBoard = (() =>  {
     };
 
     function newBoard () {
+        console.log()
         gameBoxs.forEach(box => {
         box.classList.remove(oClass, xClass);
         box.innerText = "";
         box.removeEventListener('click', playRound)
-        box.addEventListener('click', playRound)
+        box.addEventListener('click', playRound, { once : true})
     })
     }
 
