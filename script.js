@@ -41,11 +41,11 @@ const displayController = (() => {
             submitButton.style.display = "none"
         }
     };
-    // Begin game button   
+    // Begin game button - get & make players
     function startGame () {
-    const user1play = Math.random();
-    user1 = new player(user1name.value, user1select.value, user1play);
-    user2 = new player(user2name.value, user2select.value);
+        const user1play = Math.random();
+        user1 = new player(user1name.value, user1select.value, user1play);
+        user2 = new player(user2name.value, user2select.value);
         // build gameText
         if(userForm.style.display = "grid") {
            userForm.style.display = "none";
@@ -57,39 +57,43 @@ const displayController = (() => {
            userForm.style.display = "grid"           
         }
         //assign random start - begin text
+        if (user1.start > 0.5) {
             if(user1.piece === "X") {
-                gameText.innerText = `${user1.name} won the coin toss to go first.\n---\nplace your marker : \n ${user1.piece}`
-                console.log(user1)
+                user1.turn = true
+            } else {
+                user1.turn = false
+            } 
+            gameText.innerText = `${user2.name} won the coin toss to go first.\n---\nplace your marker : \n ${user2.piece}`
+        } else {
+            if(user1.piece === "O") {
                 user1.turn = true
             } else {
                 user1.turn = false
             }
-        
-            
-            // if(user2.piece === "X") {
-            //     gameText.innerText = `${user2.name} won the coin toss to go first.\n---\nplace your marker : \n ${user2.piece}`
-            //     playTurn = true
-            // } else {
-            //     playTurn = false
-            // }
-        
+            gameText.innerText = `${user1.name} won the coin toss to go first.\n---\nplace your marker : \n ${user1.piece}`
+        }
         scoreText.innerText = "";
         user1.round = 0;
-
-        console.log(user1.turn)
-        
     return {user1, user2}
     };
-
-    //build gameboard play, and reset all variables at start
+    //build gameboard and reset all variables at start
     function resetRound () {
         gameBoard.newBoard()
-        if(user1.turn === true && user1.piece === "X" || user1.piece === "O") {
-            gameText.innerText = `New Round!\n ---\n${user1.name}'s turn to start`
-            // user1.turn = true
+        console.log(user1.turn)
+        if(user1.turn === true) {
+            if(user1.piece === "X") {
+                gameText.innerText = `New Round!\n ---\n${user2.name}'s turn to start`
+            } else {
+                 gameText.innerText = `New Round!\n ---\n${user1.name}'s turn to start`
+            }
         } else {
-            gameText.innerText = `New Round!\n ---\n${user2.name}'s turn to start`
-            // user1.turn = false
+           if(user1.piece === "O") {
+                user1.turn = true
+                gameText.innerText = `New Round!\n ---\n${user1.name}'s turn to start`
+           } else {
+                user1.turn = true
+                gameText.innerText = `New Round!\n ---\n${user2.name}'s turn to start`
+           }
         } 
     };
 return {startGame, getUser1, getUser2}
@@ -103,13 +107,11 @@ const gameBoard = (() =>  {
     const oClass = "O";
     const winCombo = [
         [0, 3, 6], [0, 1, 2], [0, 4, 8],
-        [1,  4, 7], [3 ,4 ,5], [2,4,6],
-        [2, 5 ,  8], [6, 7, 8]
+        [1, 4, 7], [3 ,4 ,5], [2, 4, 6],
+        [2, 5, 8], [6, 7, 8]
     ];
-    // need to call playTurn before user's or code breaks...
-    displayController.startGame().playTurn;
-    let user1 = displayController.getUser1();
-    let user2 = displayController.getUser2();
+    let user1;
+    let user2;
     // --gameBox Listeners
     gameBoxs.forEach(box => {
         box.classList.remove(xClass, oClass)
@@ -118,6 +120,8 @@ const gameBoard = (() =>  {
     });
 
     function playRound(e) {
+        user1 = displayController.getUser1();
+        user2 = displayController.getUser2();
         const box = e.target;
         const  currentClass = user1.turn ? oClass : xClass
         const oppersiteClass = user1.turn ? xClass : oClass
@@ -127,28 +131,33 @@ const gameBoard = (() =>  {
                 gameText.innerText = `${currentClass}'s Win\n---\nWell done ${user1.name}!` 
                 user1.wins = user1.wins +1
                 user1.round = user1.round +1
-                // user1.turn = false
-                swapTurns()
+                if (user1.piece === "X") {
+                    user1.turn = true  
+                } else {
+                    user1.turn = false
+                }
             }
             else {
                 gameText.innerText = `${currentClass}'s Win\n---\nWell done ${user2.name}!` 
                 user2.wins = user2.wins +1
                 user1.round = user1.round +1
-                // user1.turn = true
-                swapTurns()
+                if (user1.piece === "O") {
+                    user1.turn = true
+                } else {
+                    user1.turn = false
+                }
             }
-            showScore (user1, user2)
+            showScore ()
             endGame(false)  
         } else if (checkDraw()) {
             user1.round = user1.round + 1
             gameText.innerText = "It's a Draw! \n---\n Play again"
             if (currentClass === user1.piece) {
-                // user1.turn = false
+                user1.turn = false
             } else {
-                // user1.turn = true
+                user1.turn = true
             }
-            swapTurns()
-            showScore(user1, user2)
+            showScore()
         } else {
             swapTurns()
             if(currentClass == user2.piece) {
@@ -178,7 +187,7 @@ const gameBoard = (() =>  {
             })
         })
     };
-
+    //make gamebox an array to check if every box contains X or O
     function checkDraw() {
         return [...gameBoxs].every(box => {
             return box.classList.contains(oClass) ||
@@ -195,23 +204,6 @@ const gameBoard = (() =>  {
             check3wins()
         }
     };
-    //Prevent board being clicked after win/draw
-    function pauseClicks () {
-        gameBoxs.forEach(box => {
-            box.removeEventListener('click', playRound)
-        })
-    };
-
-    function showScore (user1, user2) {
-        if (user1.wins === 3 || user2.wins === 3) {
-            scoreText.innerText = gameText.innerText
-        }
-        else {
-            scoreText.innerText = `Current Round : ${user1.round}
-            ${user1.name}'s wins : ${user1.wins}
-            ${user2.name}'s wins : ${user2.wins}`
-        }
-    };
 
     function check3wins () {
         if (user1.wins === 3) {
@@ -223,18 +215,34 @@ const gameBoard = (() =>  {
             resetButton.style.display = "none"
         }
     };
+    //Prevent board being clicked after win/draw
+    function pauseClicks () {
+        gameBoxs.forEach(box => {
+            box.removeEventListener('click', playRound)
+        })
+    };
+
+    function showScore () {
+        if (user1.wins === 3 || user2.wins === 3) {
+            scoreText.innerText = gameText.innerText
+        }
+        else {
+            scoreText.innerText = `Current Round : ${user1.round}
+            ${user1.name}'s wins : ${user1.wins}
+            ${user2.name}'s wins : ${user2.wins}`
+        }
+    };
 
     function newBoard () {
-        console.log()
         gameBoxs.forEach(box => {
         box.classList.remove(oClass, xClass);
         box.innerText = "";
         box.removeEventListener('click', playRound)
         box.addEventListener('click', playRound, { once : true})
-    })
+        })
     }
 
-return {playRound, newBoard}
+return {playRound, newBoard, user1}
 })();
 
 
